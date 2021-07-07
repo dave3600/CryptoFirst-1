@@ -1,0 +1,5 @@
+<div class="accordion">
+    <div *ngFor="let job of jobs; let i = index;"> 
+        <app-job [job]="job" [ind]="i"></app-job>
+    </div>
+</div>
