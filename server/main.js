@@ -1,52 +1,35 @@
-const express = require("express")
-const cors = require("cors")
+const express = require('express')
+const mongoose = require('mongoose')
+const cors = require('cors')
+const {DocsModel} = require('./src/model/Worrior')
+
+const PORT = 3000;
+
 
 const app = express()
+app.use(cors())
 
-app.get("/jobs",function(req,res){
+app.post("/job", function(req,res){
+    docs = new DocsModel({'name':'itachi', 'type':'Justu', 'data':'Genjustu'})
+    docs.save().catch((err) => {
+        console.dir(err)
+    })
+    res.send('inserted okay')
+})
+app.get("/job",function(req,res){
     
-    
-    res.send("welcome")
+    let data;
+    DocsModel.find({}, function(err, docs) {
+
+        console.debug('docs:'+docs)
+        res.send("docs:",JSON.stringify(docs))
+    })
+    res.send("no data")
+})
+app.get("/test",function(res,res){
+    res.send('okay');
 })
 
-app.listen(3000)
-
-class Animal{
-    static _a()
-    {
-        console.log("_a() called")
-    }
-    a()
-    {
-        console.log("a() called")
-    }
-}
-
-
-class Cat extends Animal{
-    static _c(){
-        console.log("_c() called")
-    }
-    c(){
-        console.log("c() called")
-    }
-}
-function done(){
-    console.log("done");
-}
-var d =new done();
-var animal = new Animal()
-var cat = new Cat()
-
-console.log(Animal._a())
-console.log(animal.a())
-
-
-
-console.log(animal.__proto__ === Animal.prototype)
-console.log(Cat.__proto__ === Animal)
-console.log(Cat.prototype.__proto__ === Animal.prototype)
-console.log(cat.__proto__ === Cat.prototype)
-console.debug(cat)
-console.debug(done)
-console.debug(d)
+app.listen(PORT, function(err){
+    console.info(`Crypto server running at port : ${PORT}`)
+})
