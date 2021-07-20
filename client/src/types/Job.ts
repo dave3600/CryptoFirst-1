@@ -1,14 +1,18 @@
-interface Job{
-    id:number,
-    email:string,
-    cryptoAddress:string,
-    wallet: number,
-    description:string,
-    created_at:string,
-    before_photo: string,
-    after_photo: string,
-    hours: number,
-    status:string,
-    up_vote: number,
-    down_vote: number,
+export interface Job{
+    _id : String,
+    email: String,
+    cryptoAddress: String,
+    description:String,
+    createdAt : Date,
+    updatedAt : Date,
+    hours: Number,
+    status: String,
+    proofOfWork: {
+        before:String,
+        after:String
+    },
+    votes:  {
+        up: Number,
+        down: Number
+    }
 }

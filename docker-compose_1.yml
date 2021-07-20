@@ -1,0 +1,74 @@
+version: "3.2"
+services:
+    frontend:
+        image: crypto-client
+        container_name: crypto-client
+        environment: 
+        -   NODE_ENV=development
+        build: 
+            context: ./client
+            dockerfile: Dockerfile
+        ports: 
+        -   4200:4200
+        #network_mode: host
+        networks: 
+        -   frontend-net
+        depends_on: 
+        -   backend
+        # restart: on-failure
+    backend:
+        image: crypto-server 
+        container_name: crypto-server
+        build:
+            context: ./server
+            dockerfile: Dockerfile
+        ports: 
+        -   3001:3000
+        networks:
+        -   backend-net
+        depends_on: 
+        -   db
+        # restart: on-failure
+    db:
+        image: mongo
+        container_name: crypto-db
+        # environment: 
+        #     MONGO_INIT_ROOT_USERNAME : itachi # should use Secret
+        #     MONGO_INIT_ROOT_PASSWORD : itachi
+        ports: 
+        -   27017:27017
+        networks:
+        -   backend-net
+        -   mongo-express-net
+        volumes: 
+        -   ./database/mongo/data/configdb:/data/configdb
+        -   ./database/mongo/data/db:/data/db
+    mongo-frontend:
+        image: mongo-express
+        container_name: mongo-frontend
+        environment: 
+            ME_CONFIG_MONGODB_SERVER : db
+            # ME_CONFIG_MONGODB_ENABLE_ADMIN : 'true'
+            # ME_CONFIG_MONGODB_ADMINUSERNAME: itachi
+            # ME_CONFIG_MONGODB_ADMINPASSWORD : itachi # should use Secret
+            # ME_CONFIG_OPTIONS_EDITORTHEME : ambiance
+
+        ports: 
+        -   8081:8081
+        depends_on: 
+        -   db
+        networks:
+        -   mongo-express-net
+        volumes: 
+        -   ./database/mongo/data/configdb:/data/configdb
+        -   ./database/mongo/data/db:/data/db
+        # restart: always
+networks:
+    frontend-net:
+        driver: bridge
+    backend-net:
+        driver: bridge
+    mongo-express-net:
+        driver: bridge
+# volumes: 
+#     database-vol:

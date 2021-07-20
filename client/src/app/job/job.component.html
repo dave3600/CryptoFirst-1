@@ -7,8 +7,8 @@
                 <ul class="d-inline-flex w-100" style="position:absolute;right:100px; list-style: none; justify-content: space-between;"> 
                     <li></li>
                     <li> 
-                        <i class="bi-arrow-up"> <span class="badge bg-primary" style="font-size:.5rem">{{job.up_vote}}</span></i> 
-                        <i class="bi-arrow-down"> <span class="badge bg-primary" style="font-size:.5rem">{{job.down_vote}}</span></i>
+                        <i class="bi-arrow-up"> <span class="badge bg-primary" style="font-size:.5rem">{{job.votes.up}}</span></i> 
+                        <i class="bi-arrow-down"> <span class="badge bg-primary" style="font-size:.5rem">{{job.votes.down}}</span></i>
                     </li> 
                 </ul>
             </button>
@@ -31,7 +31,7 @@
                         </tr>
                         <tr>
                             <th>Created At</th>
-                            <td class="text-end">{{job.created_at}}</td>
+                            <td class="text-end">{{job.createdAt}}</td>
                         </tr>
                         <tr>
                             <th colspan="2"><a style="text-decoration: none;" role="button" data-bs-toggle="collapse" data-bs-target="#proof_work" aria-expanded="false" aria-controls="proof_work">Proof of Work <i class="bi-eye-fill"></i></a></th>
@@ -39,18 +39,19 @@
                     </tbody>
 
                 </table>
+                
                 <div class="collapse" id="proof_work">
                     <div class="card card.body">
                         <ul class="d-flex w-100 p-2" style="list-style: none; justify-content: space-between;">
                             <li class="mt-2"> 
                                 <figure class="figure">
-                                    <img class="figure-img img-thubnail" src="../../assets/images/beach_hill.jpg" alt="beach_hill" width="400x" height="250px">
+                                    <img class="figure-img img-thubnail" [src]="imgLocation + job.proofOfWork.before" [alt]="job.proofOfWork.before" width="400x" height="250px">
                                     <figcaption class="figure-caption"> before</figcaption>
                                 </figure> 
                             </li>
                             <li class="mt-2"> 
                                 <figure class="figure">
-                                    <img class="figure-img img-thubnail" src="../../assets/images/flowerbed.jpg" alt="flowerbed" width="400px" height="250px">
+                                    <img class="figure-img img-thubnail" [src]="imgLocation + job.proofOfWork.after" [alt]="job.proofOfWork.after" width="400px" height="250px">
                                     <figcaption class="figure-caption"> after</figcaption>
                                 </figure> 
                             </li>

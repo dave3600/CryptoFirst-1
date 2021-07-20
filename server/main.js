@@ -1,35 +1,31 @@
 const express = require('express')
 const mongoose = require('mongoose')
 const cors = require('cors')
-const {DocsModel} = require('./src/model/Worrior')
+const bodyParser = require('body-parser')
+const {jobRouter} = require('./src/controller/Jobs.controller')
 
 const PORT = 3000;
 
-
 const app = express()
 app.use(cors())
+app.use(bodyParser.json())
 
-app.post("/job", function(req,res){
-    docs = new DocsModel({'name':'itachi', 'type':'Justu', 'data':'Genjustu'})
-    docs.save().catch((err) => {
-        console.dir(err)
+//const uri = 'mongodb://itachi:itachi@db:27017/crypto'
+const uri = 'mongodb://db:27017/crypto'
+const options = {useNewUrlParser:true, socketTimeoutMS:30000,serverSelectionTimeoutMS:5000,poolSize:10}
+mongoose.connect(uri, options).then((result) => {
+    app.listen(PORT, function(){
+        console.info(`Crypto server running at port : ${PORT}`)
     })
-    res.send('inserted okay')
-})
-app.get("/job",function(req,res){
-    
-    let data;
-    DocsModel.find({}, function(err, docs) {
+}).catch((function(err){
+    console.error(err)
+}))   
 
-        console.debug('docs:'+docs)
-        res.send("docs:",JSON.stringify(docs))
-    })
-    res.send("no data")
-})
-app.get("/test",function(res,res){
-    res.send('okay');
+app.get("/",function(res,res){
+    res.status(201).send('An express backend server');
 })
 
-app.listen(PORT, function(err){
-    console.info(`Crypto server running at port : ${PORT}`)
-})
+
+
+app.use("/job",jobRouter)
+
