@@ -1,23 +1,22 @@
 import { NgModule } from '@angular/core';
 import { BrowserModule } from '@angular/platform-browser';
-import {HttpClientModule} from '@angular/common/http'
+import { HttpClientModule } from '@angular/common/http'
 
 import { AppComponent } from './app.component';
-import { JobsComponent } from './jobs/jobs.component';
-import { JobComponent } from './job/job.component';
-import { JobsService } from './jobs/jobs.service';
+import { appRoutedComponents, AppRoutingModule } from './app-routing.module';
+
 
 @NgModule({
   declarations: [
     AppComponent,
-    JobsComponent,
-    JobComponent
+    appRoutedComponents,
   ],
   imports: [
     BrowserModule,
-    HttpClientModule
+    HttpClientModule,
+    AppRoutingModule
   ],
-  providers: [JobsService],
+  providers: [],
   bootstrap: [AppComponent]
 })
 export class AppModule { }
