@@ -8,10 +8,9 @@ import { PagenotfoundComponent } from './pagenotfound/pagenotfound.component';
 
 
 const routes:Routes = [
-  { path:"", redirectTo:"job", pathMatch:"full"},
   { path:"job", component:JobsComponent},
-  { path:"job/:id", component:JobComponent},
   { path:"job/create", component:CreateJobComponent},
+  { path: "", pathMatch:"full", redirectTo:"job"},
   { path:"**", component: PagenotfoundComponent}
 ]
 @NgModule({
